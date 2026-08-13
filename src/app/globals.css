@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Symbols+Outlined');
+
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url('https://fonts.gstatic.com/s/materialsymbolsoutlined/v364/kJF1BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY43zj-jCxv3fzvRNU22ZXGJpEpjC_1v-p_4MrImHCIJIZrDCvHOem.ttf') format('truetype');
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/materialicons/v145/flUhRq6tzZclQEJ-Vdg-IuiaDsNZ.ttf') format('truetype');
+  font-display: block;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* User-Specified Light Mode Palette: #FF9D9D, #FFC5AA, #EEF8CD, #BBF1D2 */
+  --palette-rose: #FF9D9D;
+  --palette-peach: #FFC5AA;
+  --palette-lime: #EEF8CD;
+  --palette-mint: #BBF1D2;
+
+  --background: #fbfdf9;
+  --on-background: #18231c;
+  --surface: #ffffff;
+  --on-surface: #18231c;
+  --on-surface-variant: #435147;
+  --surface-dim: #eef3eb;
+  --surface-bright: #ffffff;
+  --surface-variant: #e1ede3;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f5f9f4;
+  --surface-container: #ebf5ee;
+  --surface-container-high: #e2efe6;
+  --surface-container-highest: #d6e8dc;
+  
+  --primary: #12634a;
+  --primary-container: #BBF1D2;
+  --on-primary: #ffffff;
+  --on-primary-container: #002116;
+  --primary-fixed: #12634a;
+  --primary-fixed-dim: #0d4d39;
+  
+  --secondary: #9c4b26;
+  --secondary-container: #FFC5AA;
+  --on-secondary: #ffffff;
+  --on-secondary-container: #331204;
+  --secondary-fixed: #9c4b26;
+  --secondary-fixed-dim: #7a381a;
+  
+  --tertiary: #b03838;
+  --tertiary-container: #FF9D9D;
+  --on-tertiary: #ffffff;
+  --on-tertiary-container: #3d0505;
+  --tertiary-fixed: #b03838;
+  --tertiary-fixed-dim: #8f2828;
+
+  --quaternary: #64751c;
+  --quaternary-container: #EEF8CD;
+  
+  --outline: #718175;
+  --outline-variant: #c0cfc4;
+  
+  --bg-midnight: #f7fbf8;
+  --bg-deep-teal: #ebf7f0;
+  
+  --glass-border: rgba(18, 99, 74, 0.16);
+  --glass-border-light: rgba(255, 157, 157, 0.35);
+  --glass-fill-dark: rgba(255, 255, 255, 0.78);
+  --glass-fill-light: rgba(255, 255, 255, 0.90);
+  --glass-nav: rgba(251, 253, 249, 0.92);
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --card-border: rgba(187, 241, 210, 0.6);
+  --card-hover-bg: rgba(255, 255, 255, 0.98);
+  --sidebar-bg: rgba(251, 253, 249, 0.96);
+  --sidebar-border: rgba(18, 99, 74, 0.14);
+  --table-header: rgba(238, 248, 205, 0.55);
+  --table-hover: rgba(187, 241, 210, 0.25);
+}
+
+.dark {
+  --palette-rose: #ffb4a8;
+  --palette-peach: #ffdad4;
+  --palette-lime: #abeef2;
+  --palette-mint: #8fd2d6;
+
+  --background: #111414;
+  --on-background: #e1e3e3;
+  --surface: #111414;
+  --on-surface: #e1e3e3;
+  --on-surface-variant: #bfc8c9;
+  --surface-dim: #111414;
+  --surface-bright: #363a3a;
+  --surface-variant: #323535;
+  --surface-container-lowest: #0b0f0f;
+  --surface-container-low: #191c1c;
+  --surface-container: #1d2020;
+  --surface-container-high: #272b2b;
+  --surface-container-highest: #323535;
+  
+  --primary: #8fd2d6;
+  --primary-container: #105e62;
+  --on-primary: #003739;
+  --on-primary-container: #92d5d9;
+  --primary-fixed: #abeef2;
+  --primary-fixed-dim: #8fd2d6;
+  
+  --secondary: #7ad4e1;
+  --secondary-container: #007985;
+  --on-secondary: #00363c;
+  --on-secondary-container: #ccf8ff;
+  --secondary-fixed: #97f0fe;
+  --secondary-fixed-dim: #7ad4e1;
+  
+  --tertiary: #ffb4a8;
+  --tertiary-container: #a42115;
+  --on-tertiary: #690000;
+  --on-tertiary-container: #ffb9ae;
+  --tertiary-fixed: #ffdad4;
+  --tertiary-fixed-dim: #ffb4a8;
+
+  --quaternary: #abeef2;
+  --quaternary-container: #105e62;
+  
+  --outline: #899393;
+  --outline-variant: #3f4849;
+  
+  --bg-midnight: #041617;
+  --bg-deep-teal: #082E30;
+  
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-border-light: rgba(255, 255, 255, 0.08);
+  --glass-fill-dark: rgba(0, 0, 0, 0.35);
+  --glass-fill-light: rgba(255, 255, 255, 0.12);
+  --glass-nav: rgba(4, 22, 23, 0.90);
+  --card-bg: rgba(39, 43, 43, 0.55);
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-hover-bg: rgba(39, 43, 43, 0.85);
+  --sidebar-bg: rgba(8, 46, 48, 0.75);
+  --sidebar-border: rgba(255, 255, 255, 0.12);
+  --table-header: rgba(39, 43, 43, 0.6);
+  --table-hover: rgba(39, 43, 43, 0.3);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Manrope', sans-serif;
+    background-color: var(--background);
+    color: var(--on-surface);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* Material Symbols & Icons Font Rendering Rule */
+.material-symbols-outlined,
+.material-icons-outlined,
+.material-icons {
+  font-family: 'Material Symbols Outlined', 'Material Icons Outlined', 'Material Icons' !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'liga' 1;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  user-select: none;
+}
+
+/* Glass Card */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: var(--card-hover-bg);
+  border-color: var(--primary);
+}
