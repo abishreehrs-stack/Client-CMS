@@ -1,5 +1,6 @@
 'use client';
 
+import { API_BASE } from '@/config/api';
 import React, { useEffect, useState } from 'react';
 
 export default function InquiriesCMSPage() {
@@ -8,7 +9,7 @@ export default function InquiriesCMSPage() {
 
   const fetchInquiries = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('http://localhost:5001/api/inquiries', {
+    fetch('${API_BASE}/api/inquiries', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -24,7 +25,7 @@ export default function InquiriesCMSPage() {
 
   const updateStatus = async (id: string, status: string) => {
     const token = localStorage.getItem('cms_token');
-    await fetch(`http://localhost:5001/api/inquiries/${id}/status`, {
+    await fetch(`${API_BASE}/api/inquiries/${id}/status`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ status })
@@ -35,7 +36,7 @@ export default function InquiriesCMSPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this inquiry?')) return;
     const token = localStorage.getItem('cms_token');
-    await fetch(`http://localhost:5001/api/inquiries/${id}`, {
+    await fetch(`${API_BASE}/api/inquiries/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });

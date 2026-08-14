@@ -1,5 +1,6 @@
 'use client';
 
+import { API_BASE } from '@/config/api';
 import React, { useEffect, useState } from 'react';
 
 export default function UsersManagementPage() {
@@ -25,7 +26,7 @@ export default function UsersManagementPage() {
 
   const fetchUsers = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('http://localhost:5001/api/users', {
+    fetch('${API_BASE}/api/users', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -79,7 +80,7 @@ export default function UsersManagementPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this admin account?')) return;
     const token = localStorage.getItem('cms_token');
-    const res = await fetch(`http://localhost:5001/api/users/${id}`, {
+    const res = await fetch(`${API_BASE}/api/users/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -105,7 +106,7 @@ export default function UsersManagementPage() {
     const payload: any = { name, email, role, permissions };
     if (password) payload.password = password;
 
-    const endpoint = editingId ? `http://localhost:5001/api/users/${editingId}` : 'http://localhost:5001/api/users';
+    const endpoint = editingId ? `${API_BASE}/api/users/${editingId}` : '${API_BASE}/api/users';
     const method = editingId ? 'PUT' : 'POST';
 
     const res = await fetch(endpoint, {

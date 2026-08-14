@@ -1,5 +1,6 @@
 'use client';
 
+import { API_BASE } from '@/config/api';
 import React, { useEffect, useState } from 'react';
 
 export default function ManageJobsPage() {
@@ -18,7 +19,7 @@ export default function ManageJobsPage() {
 
   const fetchJobs = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('http://localhost:5001/api/jobs', {
+    fetch('${API_BASE}/api/jobs', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -57,7 +58,7 @@ export default function ManageJobsPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this job vacancy?')) return;
     const token = localStorage.getItem('cms_token');
-    await fetch(`http://localhost:5001/api/jobs/${id}`, {
+    await fetch(`${API_BASE}/api/jobs/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -69,7 +70,7 @@ export default function ManageJobsPage() {
     const token = localStorage.getItem('cms_token');
     const payload = { title, department, location, type, experience, salary, description };
 
-    const endpoint = editingJobId ? `http://localhost:5001/api/jobs/${editingJobId}` : 'http://localhost:5001/api/jobs';
+    const endpoint = editingJobId ? `${API_BASE}/api/jobs/${editingJobId}` : '${API_BASE}/api/jobs';
     const method = editingJobId ? 'PUT' : 'POST';
 
     const res = await fetch(endpoint, {

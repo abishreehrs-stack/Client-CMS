@@ -1,5 +1,6 @@
 'use client';
 
+import { API_BASE } from '@/config/api';
 import React, { useEffect, useState } from 'react';
 
 export default function ApplicationsPage() {
@@ -8,7 +9,7 @@ export default function ApplicationsPage() {
 
   const fetchApps = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('http://localhost:5001/api/applications', {
+    fetch('${API_BASE}/api/applications', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -24,7 +25,7 @@ export default function ApplicationsPage() {
 
   const updateStatus = async (id: string, status: string) => {
     const token = localStorage.getItem('cms_token');
-    await fetch(`http://localhost:5001/api/applications/${id}/status`, {
+    await fetch(`${API_BASE}/api/applications/${id}/status`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ status })
@@ -35,7 +36,7 @@ export default function ApplicationsPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this application entry?')) return;
     const token = localStorage.getItem('cms_token');
-    await fetch(`http://localhost:5001/api/applications/${id}`, {
+    await fetch(`${API_BASE}/api/applications/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });

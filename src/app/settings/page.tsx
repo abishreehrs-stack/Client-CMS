@@ -1,5 +1,6 @@
 'use client';
 
+import { API_BASE } from '@/config/api';
 import React, { useEffect, useState } from 'react';
 
 export default function SettingsCMSPage() {
@@ -18,7 +19,7 @@ export default function SettingsCMSPage() {
 
   useEffect(() => {
     const token = localStorage.getItem('cms_token');
-    fetch('http://localhost:5001/api/settings', {
+    fetch('${API_BASE}/api/settings', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -33,7 +34,7 @@ export default function SettingsCMSPage() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem('cms_token');
-    await fetch('http://localhost:5001/api/settings', {
+    await fetch('${API_BASE}/api/settings', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify(settings)

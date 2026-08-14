@@ -1,5 +1,6 @@
 'use client';
 
+import { API_BASE } from '@/config/api';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -54,7 +55,7 @@ export default function RootLayout({
       return;
     }
 
-    fetch('http://localhost:5001/api/auth/me', {
+    fetch('${API_BASE}/api/auth/me', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -81,7 +82,7 @@ export default function RootLayout({
     setLoginError('');
 
     try {
-      const res = await fetch('http://localhost:5001/api/auth/login', {
+      const res = await fetch('${API_BASE}/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

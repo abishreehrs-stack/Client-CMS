@@ -1,5 +1,6 @@
 'use client';
 
+import { API_BASE } from '@/config/api';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -14,10 +15,10 @@ export default function CMSDashboard() {
     const headers = { 'Authorization': `Bearer ${token}` };
 
     Promise.all([
-      fetch('http://localhost:5001/api/jobs', { headers }).then(r => r.json()).catch(() => []),
-      fetch('http://localhost:5001/api/applications', { headers }).then(r => r.json()).catch(() => []),
-      fetch('http://localhost:5001/api/inquiries', { headers }).then(r => r.json()).catch(() => []),
-      fetch('http://localhost:5001/api/services', { headers }).then(r => r.json()).catch(() => [])
+      fetch('${API_BASE}/api/jobs', { headers }).then(r => r.json()).catch(() => []),
+      fetch('${API_BASE}/api/applications', { headers }).then(r => r.json()).catch(() => []),
+      fetch('${API_BASE}/api/inquiries', { headers }).then(r => r.json()).catch(() => []),
+      fetch('${API_BASE}/api/services', { headers }).then(r => r.json()).catch(() => [])
     ]).then(([j, a, i, s]) => {
       setJobs(Array.isArray(j) ? j : []);
       setApplications(Array.isArray(a) ? a : []);

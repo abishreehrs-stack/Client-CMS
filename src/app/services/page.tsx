@@ -1,5 +1,6 @@
 'use client';
 
+import { API_BASE } from '@/config/api';
 import React, { useEffect, useState } from 'react';
 
 export default function ServicesCMSPage() {
@@ -19,7 +20,7 @@ export default function ServicesCMSPage() {
 
   const fetchServices = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('http://localhost:5001/api/services', {
+    fetch('${API_BASE}/api/services', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -64,7 +65,7 @@ export default function ServicesCMSPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this service offering?')) return;
     const token = localStorage.getItem('cms_token');
-    await fetch(`http://localhost:5001/api/services/${id}`, {
+    await fetch(`${API_BASE}/api/services/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -77,7 +78,7 @@ export default function ServicesCMSPage() {
     const deliverables = deliverablesText.split(',').map(s => s.trim()).filter(Boolean);
     const payload = { title, category, icon, tagline, description, timeline, retentionRate, deliverables };
 
-    const endpoint = editingId ? `http://localhost:5001/api/services/${editingId}` : 'http://localhost:5001/api/services';
+    const endpoint = editingId ? `${API_BASE}/api/services/${editingId}` : '${API_BASE}/api/services';
     const method = editingId ? 'PUT' : 'POST';
 
     const res = await fetch(endpoint, {

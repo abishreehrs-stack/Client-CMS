@@ -1,5 +1,6 @@
 'use client';
 
+import { API_BASE } from '@/config/api';
 import React, { useEffect, useState } from 'react';
 
 export default function ClientsCMSPage() {
@@ -18,7 +19,7 @@ export default function ClientsCMSPage() {
 
   const fetchClients = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('http://localhost:5001/api/clients', {
+    fetch('${API_BASE}/api/clients', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -59,7 +60,7 @@ export default function ClientsCMSPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this client partner?')) return;
     const token = localStorage.getItem('cms_token');
-    await fetch(`http://localhost:5001/api/clients/${id}`, {
+    await fetch(`${API_BASE}/api/clients/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -71,7 +72,7 @@ export default function ClientsCMSPage() {
     const token = localStorage.getItem('cms_token');
     const payload = { name, sector, logoText, location, placements, focus, relationship };
 
-    const endpoint = editingId ? `http://localhost:5001/api/clients/${editingId}` : 'http://localhost:5001/api/clients';
+    const endpoint = editingId ? `${API_BASE}/api/clients/${editingId}` : '${API_BASE}/api/clients';
     const method = editingId ? 'PUT' : 'POST';
 
     const res = await fetch(endpoint, {
