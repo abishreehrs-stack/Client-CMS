@@ -19,7 +19,7 @@ export default function SettingsCMSPage() {
 
   useEffect(() => {
     const token = localStorage.getItem('cms_token');
-    fetch('${API_BASE}/api/settings', {
+    fetch(`${API_BASE}/api/settings`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -34,7 +34,7 @@ export default function SettingsCMSPage() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem('cms_token');
-    await fetch('${API_BASE}/api/settings', {
+    await fetch(`${API_BASE}/api/settings`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify(settings)

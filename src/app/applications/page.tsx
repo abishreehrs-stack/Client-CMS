@@ -9,7 +9,7 @@ export default function ApplicationsPage() {
 
   const fetchApps = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('${API_BASE}/api/applications', {
+    fetch(`${API_BASE}/api/applications`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())

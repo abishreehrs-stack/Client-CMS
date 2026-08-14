@@ -19,7 +19,7 @@ export default function ClientsCMSPage() {
 
   const fetchClients = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('${API_BASE}/api/clients', {
+    fetch(`${API_BASE}/api/clients`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -72,7 +72,7 @@ export default function ClientsCMSPage() {
     const token = localStorage.getItem('cms_token');
     const payload = { name, sector, logoText, location, placements, focus, relationship };
 
-    const endpoint = editingId ? `${API_BASE}/api/clients/${editingId}` : '${API_BASE}/api/clients';
+    const endpoint = editingId ? `${API_BASE}/api/clients/${editingId}` : `${API_BASE}/api/clients`;
     const method = editingId ? 'PUT' : 'POST';
 
     const res = await fetch(endpoint, {

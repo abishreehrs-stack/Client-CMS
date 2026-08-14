@@ -19,7 +19,7 @@ export default function ManageJobsPage() {
 
   const fetchJobs = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('${API_BASE}/api/jobs', {
+    fetch(`${API_BASE}/api/jobs`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -70,7 +70,7 @@ export default function ManageJobsPage() {
     const token = localStorage.getItem('cms_token');
     const payload = { title, department, location, type, experience, salary, description };
 
-    const endpoint = editingJobId ? `${API_BASE}/api/jobs/${editingJobId}` : '${API_BASE}/api/jobs';
+    const endpoint = editingJobId ? `${API_BASE}/api/jobs/${editingJobId}` : `${API_BASE}/api/jobs`;
     const method = editingJobId ? 'PUT' : 'POST';
 
     const res = await fetch(endpoint, {

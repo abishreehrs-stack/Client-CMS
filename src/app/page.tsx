@@ -15,10 +15,10 @@ export default function CMSDashboard() {
     const headers = { 'Authorization': `Bearer ${token}` };
 
     Promise.all([
-      fetch('${API_BASE}/api/jobs', { headers }).then(r => r.json()).catch(() => []),
-      fetch('${API_BASE}/api/applications', { headers }).then(r => r.json()).catch(() => []),
-      fetch('${API_BASE}/api/inquiries', { headers }).then(r => r.json()).catch(() => []),
-      fetch('${API_BASE}/api/services', { headers }).then(r => r.json()).catch(() => [])
+      fetch(`${API_BASE}/api/jobs`, { headers }).then(r => r.json()).catch(() => []),
+      fetch(`${API_BASE}/api/applications`, { headers }).then(r => r.json()).catch(() => []),
+      fetch(`${API_BASE}/api/inquiries`, { headers }).then(r => r.json()).catch(() => []),
+      fetch(`${API_BASE}/api/services`, { headers }).then(r => r.json()).catch(() => [])
     ]).then(([j, a, i, s]) => {
       setJobs(Array.isArray(j) ? j : []);
       setApplications(Array.isArray(a) ? a : []);

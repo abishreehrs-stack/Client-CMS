@@ -9,7 +9,7 @@ export default function InquiriesCMSPage() {
 
   const fetchInquiries = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('${API_BASE}/api/inquiries', {
+    fetch(`${API_BASE}/api/inquiries`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())

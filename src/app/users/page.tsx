@@ -26,7 +26,7 @@ export default function UsersManagementPage() {
 
   const fetchUsers = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('${API_BASE}/api/users', {
+    fetch(`${API_BASE}/api/users`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -106,7 +106,7 @@ export default function UsersManagementPage() {
     const payload: any = { name, email, role, permissions };
     if (password) payload.password = password;
 
-    const endpoint = editingId ? `${API_BASE}/api/users/${editingId}` : '${API_BASE}/api/users';
+    const endpoint = editingId ? `${API_BASE}/api/users/${editingId}` : `${API_BASE}/api/users`;
     const method = editingId ? 'PUT' : 'POST';
 
     const res = await fetch(endpoint, {

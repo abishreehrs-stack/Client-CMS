@@ -20,7 +20,7 @@ export default function ServicesCMSPage() {
 
   const fetchServices = () => {
     const token = localStorage.getItem('cms_token');
-    fetch('${API_BASE}/api/services', {
+    fetch(`${API_BASE}/api/services`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -78,7 +78,7 @@ export default function ServicesCMSPage() {
     const deliverables = deliverablesText.split(',').map(s => s.trim()).filter(Boolean);
     const payload = { title, category, icon, tagline, description, timeline, retentionRate, deliverables };
 
-    const endpoint = editingId ? `${API_BASE}/api/services/${editingId}` : '${API_BASE}/api/services';
+    const endpoint = editingId ? `${API_BASE}/api/services/${editingId}` : `${API_BASE}/api/services`;
     const method = editingId ? 'PUT' : 'POST';
 
     const res = await fetch(endpoint, {
