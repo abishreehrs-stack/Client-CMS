@@ -135,6 +135,7 @@ export default function RootLayout({
     { label: 'Overview', href: '/', icon: 'dashboard', show: true },
     { label: 'Jobs', href: '/jobs', icon: 'work', show: hasPermission('canManageJobs') },
     { label: 'Apps', href: '/applications', icon: 'badge', show: hasPermission('canViewApplications') },
+    { label: 'Clients', href: '/clients', icon: 'handshake', show: hasPermission('canManageClients') },
     { label: 'Inquiries', href: '/inquiries', icon: 'inbox', show: hasPermission('canViewInquiries') },
   ].filter(l => l.show);
 
@@ -464,37 +465,24 @@ export default function RootLayout({
 
             {/* ---------------- FLOATING BOTTOM DOCK FOR MOBILE NAVIGATION ---------------- */}
             <div className="md:hidden fixed bottom-3 left-3 right-3 z-40">
-              <nav className="bg-surface-container-high/95 backdrop-blur-2xl border border-glass-border shadow-2xl rounded-2xl p-1.5 flex items-center justify-around gap-1">
+              <nav className="bg-surface-container-high/95 backdrop-blur-2xl border border-glass-border shadow-2xl rounded-2xl p-1.5 flex items-center justify-between gap-1">
                 {dockLinks.map((link) => {
                   const isActive = pathname === link.href;
                   return (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`cursor-pointer flex flex-col items-center justify-center py-1.5 px-3 rounded-xl transition-all flex-1 ${
+                      className={`cursor-pointer flex flex-col items-center justify-center py-1.5 px-2 rounded-xl transition-all flex-1 min-w-0 ${
                         isActive
-                          ? 'bg-primary text-on-primary shadow-md scale-102 font-extrabold'
+                          ? 'bg-primary text-on-primary shadow-md font-extrabold'
                           : 'text-on-surface-variant hover:text-primary active:scale-95 font-medium'
                       }`}
                     >
-                      <span className="material-symbols-outlined text-[20px] mb-0.5">{link.icon}</span>
-                      <span className="text-[10px] tracking-tight">{link.label}</span>
+                      <span className="material-symbols-outlined text-[19px] mb-0.5">{link.icon}</span>
+                      <span className="text-[10px] tracking-tight truncate max-w-full">{link.label}</span>
                     </Link>
                   );
                 })}
-
-                {/* More / Profile Trigger on Dock */}
-                <button
-                  onClick={() => setMobileDrawerOpen(true)}
-                  className={`cursor-pointer flex flex-col items-center justify-center py-1.5 px-3 rounded-xl transition-all flex-1 ${
-                    mobileDrawerOpen
-                      ? 'bg-secondary text-on-secondary shadow-md'
-                      : 'text-on-surface-variant hover:text-primary active:scale-95 font-medium'
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-[20px] mb-0.5">menu_open</span>
-                  <span className="text-[10px] tracking-tight">More</span>
-                </button>
               </nav>
             </div>
 
