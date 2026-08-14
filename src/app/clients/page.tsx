@@ -134,72 +134,138 @@ export default function ClientsCMSPage() {
           <p className="font-semibold text-sm">No client partners added yet.</p>
         </div>
       ) : (
-        <div className="glass-card rounded-2xl overflow-hidden shadow-lg border border-glass-border">
-          <table className="w-full text-left text-xs text-on-surface">
-            <thead className="bg-surface-container text-on-surface-variant font-bold border-b border-glass-border uppercase tracking-wider">
-              <tr>
-                <th className="p-4">Client Name & Brand</th>
-                <th className="p-4">Sector</th>
-                <th className="p-4">Location</th>
-                <th className="p-4">Placements</th>
-                <th className="p-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-glass-border">
-              {clients.map((c) => (
-                <tr key={c.id} className="hover:bg-surface-container/50 transition-colors">
-                  <td className="p-4">
-                    <div className="flex items-center gap-3.5">
-                      <div className="w-10 h-10 min-w-[40px] rounded-xl bg-primary/15 border border-primary/20 flex items-center justify-center font-extrabold text-primary text-xs shrink-0 shadow-sm uppercase tracking-wide">
-                        {getClientInitials(c.name, c.logoText)}
-                      </div>
-                      <div className="flex flex-col min-w-0">
-                        <div className="font-bold text-sm text-on-surface truncate">{c.name}</div>
-                        <div className="flex items-center gap-2 text-[11px] text-on-surface-variant truncate mt-0.5">
-                          {c.logoText && (
-                            <span className="px-1.5 py-0.5 rounded bg-surface-container-high border border-glass-border text-[9px] font-black text-primary tracking-wider uppercase shrink-0">
-                              {c.logoText}
-                            </span>
-                          )}
-                          {c.focus && <span className="truncate max-w-[240px] opacity-75">{c.focus}</span>}
+        <>
+          {/* ---------------- MOBILE BLOCK VIEW (< md) ---------------- */}
+          <div className="md:hidden flex flex-col gap-3.5">
+            {clients.map((c) => (
+              <div 
+                key={c.id} 
+                className="glass-card rounded-2xl p-4 sm:p-5 flex flex-col gap-3 shadow-md border border-glass-border"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-10 h-10 min-w-[40px] rounded-xl bg-primary/15 border border-primary/20 flex items-center justify-center font-extrabold text-primary text-xs shrink-0 shadow-sm uppercase tracking-wide">
+                      {getClientInitials(c.name, c.logoText)}
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="font-extrabold text-sm text-on-surface truncate leading-snug">{c.name}</h3>
+                      <span className="inline-block text-[10px] text-primary font-bold uppercase tracking-wider mt-0.5">
+                        {c.sector}
+                      </span>
+                    </div>
+                  </div>
+
+                  {c.placements && (
+                    <span className="px-2.5 py-1 rounded-lg bg-surface-container text-secondary font-bold text-[10px] border border-glass-border shrink-0">
+                      {c.placements}
+                    </span>
+                  )}
+                </div>
+
+                {/* Location & Focus Details */}
+                <div className="flex flex-col gap-1.5 p-2.5 rounded-xl bg-surface-container/60 text-xs">
+                  {c.location && (
+                    <div className="flex items-center gap-1 text-[11px] text-on-surface-variant font-medium">
+                      <span className="material-symbols-outlined text-[14px] text-primary">location_on</span>
+                      <span>{c.location}</span>
+                    </div>
+                  )}
+                  {c.focus && (
+                    <p className="text-[11px] text-on-surface font-medium pt-0.5 border-t border-glass-border/40">
+                      {c.focus}
+                    </p>
+                  )}
+                </div>
+
+                {/* Actions */}
+                <div className="pt-2 flex items-center justify-end gap-2 border-t border-glass-border">
+                  <button 
+                    onClick={() => openEditModal(c)}
+                    className="cursor-pointer flex-1 py-2 px-3 rounded-xl bg-surface-container hover:bg-surface-container-high text-primary border border-glass-border transition-all text-xs font-bold flex items-center justify-center gap-1.5 active:scale-95"
+                  >
+                    <span className="material-symbols-outlined text-[16px]">edit</span>
+                    <span>Edit Partner</span>
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(c.id)}
+                    className="cursor-pointer py-2 px-3 rounded-xl bg-tertiary/10 hover:bg-tertiary/20 text-tertiary border border-tertiary/30 transition-all text-xs font-bold flex items-center justify-center gap-1.5 active:scale-95"
+                  >
+                    <span className="material-symbols-outlined text-[16px]">delete</span>
+                    <span>Delete</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ---------------- DESKTOP TABLE VIEW (>= md) ---------------- */}
+          <div className="hidden md:block glass-card rounded-2xl overflow-hidden shadow-lg border border-glass-border">
+            <table className="w-full text-left text-xs text-on-surface">
+              <thead className="bg-surface-container text-on-surface-variant font-bold border-b border-glass-border uppercase tracking-wider">
+                <tr>
+                  <th className="p-4">Client Name & Brand</th>
+                  <th className="p-4">Sector</th>
+                  <th className="p-4">Location</th>
+                  <th className="p-4">Placements</th>
+                  <th className="p-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-glass-border">
+                {clients.map((c) => (
+                  <tr key={c.id} className="hover:bg-surface-container/50 transition-colors">
+                    <td className="p-4">
+                      <div className="flex items-center gap-3.5">
+                        <div className="w-10 h-10 min-w-[40px] rounded-xl bg-primary/15 border border-primary/20 flex items-center justify-center font-extrabold text-primary text-xs shrink-0 shadow-sm uppercase tracking-wide">
+                          {getClientInitials(c.name, c.logoText)}
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <div className="font-bold text-sm text-on-surface truncate">{c.name}</div>
+                          <div className="flex items-center gap-2 text-[11px] text-on-surface-variant truncate mt-0.5">
+                            {c.logoText && (
+                              <span className="px-1.5 py-0.5 rounded bg-surface-container-high border border-glass-border text-[9px] font-black text-primary tracking-wider uppercase shrink-0">
+                                {c.logoText}
+                              </span>
+                            )}
+                            {c.focus && <span className="truncate max-w-[240px] opacity-75">{c.focus}</span>}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className="p-4">
-                    <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-bold text-[10px] border border-glass-border whitespace-nowrap">
-                      {c.sector}
-                    </span>
-                  </td>
-                  <td className="p-4 text-on-surface-variant font-medium text-xs">{c.location}</td>
-                  <td className="p-4">
-                    <span className="px-2.5 py-1 rounded-lg bg-surface-container text-secondary font-bold text-xs border border-glass-border whitespace-nowrap">
-                      {c.placements || '—'}
-                    </span>
-                  </td>
-                  <td className="p-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button 
-                        onClick={() => openEditModal(c)}
-                        className="p-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary border border-glass-border transition-all"
-                        title="Edit Client"
-                      >
-                        <span className="material-symbols-outlined text-[16px]">edit</span>
-                      </button>
-                      <button 
-                        onClick={() => handleDelete(c.id)}
-                        className="p-2 rounded-lg bg-tertiary/10 hover:bg-tertiary/20 text-tertiary border border-tertiary/30 transition-all"
-                        title="Delete Client"
-                      >
-                        <span className="material-symbols-outlined text-[16px]">delete</span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                    </td>
+                    <td className="p-4">
+                      <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-bold text-[10px] border border-glass-border whitespace-nowrap">
+                        {c.sector}
+                      </span>
+                    </td>
+                    <td className="p-4 text-on-surface-variant font-medium text-xs">{c.location}</td>
+                    <td className="p-4">
+                      <span className="px-2.5 py-1 rounded-lg bg-surface-container text-secondary font-bold text-xs border border-glass-border whitespace-nowrap">
+                        {c.placements || '—'}
+                      </span>
+                    </td>
+                    <td className="p-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <button 
+                          onClick={() => openEditModal(c)}
+                          className="cursor-pointer p-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary border border-glass-border transition-all"
+                          title="Edit Client"
+                        >
+                          <span className="material-symbols-outlined text-[16px]">edit</span>
+                        </button>
+                        <button 
+                          onClick={() => handleDelete(c.id)}
+                          className="cursor-pointer p-2 rounded-lg bg-tertiary/10 hover:bg-tertiary/20 text-tertiary border border-tertiary/30 transition-all"
+                          title="Delete Client"
+                        >
+                          <span className="material-symbols-outlined text-[16px]">delete</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
 
       {/* Modal Dialog */}

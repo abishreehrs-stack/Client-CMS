@@ -115,55 +115,119 @@ export default function ManageJobsPage() {
           <span>{errorMsg}</span>
         </div>
       ) : (
-        <div className="glass-card rounded-2xl overflow-hidden shadow-lg border border-glass-border">
-          <table className="w-full text-left text-xs text-on-surface">
-            <thead className="bg-surface-container text-on-surface-variant font-bold border-b border-glass-border uppercase tracking-wider">
-              <tr>
-                <th className="p-4">Title & Department</th>
-                <th className="p-4">Location</th>
-                <th className="p-4">Type / Exp</th>
-                <th className="p-4">Salary</th>
-                <th className="p-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-glass-border">
-              {jobs.map((job) => (
-                <tr key={job.id} className="hover:bg-surface-container/50 transition-colors">
-                  <td className="p-4">
-                    <div className="font-bold text-sm text-on-surface">{job.title}</div>
-                    <div className="text-[11px] text-primary font-semibold mt-0.5">{job.department}</div>
-                  </td>
-                  <td className="p-4 text-on-surface-variant font-medium">{job.location}</td>
-                  <td className="p-4">
-                    <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary font-semibold text-[10px] border border-glass-border">
+        <>
+          {/* ---------------- MOBILE BLOCK VIEW (< md) ---------------- */}
+          <div className="md:hidden flex flex-col gap-3.5">
+            {jobs.length === 0 ? (
+              <div className="glass-card rounded-2xl p-8 text-center text-xs text-on-surface-variant font-bold">
+                No active job vacancies posted yet.
+              </div>
+            ) : (
+              jobs.map((job) => (
+                <div 
+                  key={job.id} 
+                  className="glass-card rounded-2xl p-4 sm:p-5 flex flex-col gap-3 shadow-md border border-glass-border"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h3 className="font-extrabold text-sm sm:text-base text-on-surface leading-snug">{job.title}</h3>
+                      <span className="inline-block text-[11px] text-primary font-bold mt-0.5">{job.department}</span>
+                    </div>
+                    <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary font-bold text-[10px] border border-glass-border shrink-0">
                       {job.type}
                     </span>
-                    {job.experience && <span className="ml-2 text-on-surface-variant text-[11px] font-medium">{job.experience}</span>}
-                  </td>
-                  <td className="p-4 font-bold text-secondary">{job.salary || 'Competitive'}</td>
-                  <td className="p-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button 
-                        onClick={() => openEditModal(job)}
-                        className="p-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary border border-glass-border transition-all"
-                        title="Edit Job"
-                      >
-                        <span className="material-symbols-outlined text-[16px]">edit</span>
-                      </button>
-                      <button 
-                        onClick={() => handleDelete(job.id)}
-                        className="p-2 rounded-lg bg-tertiary/10 hover:bg-tertiary/20 text-tertiary border border-tertiary/30 transition-all"
-                        title="Delete Job"
-                      >
-                        <span className="material-symbols-outlined text-[16px]">delete</span>
-                      </button>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 p-2.5 rounded-xl bg-surface-container/60 text-xs">
+                    <div>
+                      <span className="text-[10px] text-on-surface-variant uppercase font-bold block">Location</span>
+                      <span className="text-[11px] font-semibold text-on-surface flex items-center gap-1 mt-0.5">
+                        <span className="material-symbols-outlined text-[13px] text-primary">location_on</span>
+                        {job.location}
+                      </span>
                     </div>
-                  </td>
+                    <div>
+                      <span className="text-[10px] text-on-surface-variant uppercase font-bold block">Experience</span>
+                      <span className="text-[11px] font-semibold text-on-surface mt-0.5 block">{job.experience || 'Not Specified'}</span>
+                    </div>
+                    <div className="col-span-2 pt-1.5 border-t border-glass-border/40">
+                      <span className="text-[10px] text-on-surface-variant uppercase font-bold block">Salary Bandwidth</span>
+                      <span className="text-xs font-black text-secondary mt-0.5 block">{job.salary || 'Competitive'}</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex items-center justify-end gap-2 border-t border-glass-border">
+                    <button 
+                      onClick={() => openEditModal(job)}
+                      className="cursor-pointer flex-1 py-2 px-3 rounded-xl bg-surface-container hover:bg-surface-container-high text-primary border border-glass-border transition-all text-xs font-bold flex items-center justify-center gap-1.5 active:scale-95"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">edit</span>
+                      <span>Edit Job</span>
+                    </button>
+                    <button 
+                      onClick={() => handleDelete(job.id)}
+                      className="cursor-pointer py-2 px-3 rounded-xl bg-tertiary/10 hover:bg-tertiary/20 text-tertiary border border-tertiary/30 transition-all text-xs font-bold flex items-center justify-center gap-1.5 active:scale-95"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">delete</span>
+                      <span>Delete</span>
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* ---------------- DESKTOP TABLE VIEW (>= md) ---------------- */}
+          <div className="hidden md:block glass-card rounded-2xl overflow-hidden shadow-lg border border-glass-border">
+            <table className="w-full text-left text-xs text-on-surface">
+              <thead className="bg-surface-container text-on-surface-variant font-bold border-b border-glass-border uppercase tracking-wider">
+                <tr>
+                  <th className="p-4">Title & Department</th>
+                  <th className="p-4">Location</th>
+                  <th className="p-4">Type / Exp</th>
+                  <th className="p-4">Salary</th>
+                  <th className="p-4 text-right">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="divide-y divide-glass-border">
+                {jobs.map((job) => (
+                  <tr key={job.id} className="hover:bg-surface-container/50 transition-colors">
+                    <td className="p-4">
+                      <div className="font-bold text-sm text-on-surface">{job.title}</div>
+                      <div className="text-[11px] text-primary font-semibold mt-0.5">{job.department}</div>
+                    </td>
+                    <td className="p-4 text-on-surface-variant font-medium">{job.location}</td>
+                    <td className="p-4">
+                      <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary font-semibold text-[10px] border border-glass-border">
+                        {job.type}
+                      </span>
+                      {job.experience && <span className="ml-2 text-on-surface-variant text-[11px] font-medium">{job.experience}</span>}
+                    </td>
+                    <td className="p-4 font-bold text-secondary">{job.salary || 'Competitive'}</td>
+                    <td className="p-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <button 
+                          onClick={() => openEditModal(job)}
+                          className="cursor-pointer p-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary border border-glass-border transition-all"
+                          title="Edit Job"
+                        >
+                          <span className="material-symbols-outlined text-[16px]">edit</span>
+                        </button>
+                        <button 
+                          onClick={() => handleDelete(job.id)}
+                          className="cursor-pointer p-2 rounded-lg bg-tertiary/10 hover:bg-tertiary/20 text-tertiary border border-tertiary/30 transition-all"
+                          title="Delete Job"
+                        >
+                          <span className="material-symbols-outlined text-[16px]">delete</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
 
       {/* Modal Dialog */}
