@@ -94,6 +94,18 @@ export default function ClientsCMSPage() {
     fetchClients();
   };
 
+  const getClientInitials = (clientName: string, text?: string) => {
+    if (text && text.length <= 4 && !text.includes(' ')) {
+      return text.toUpperCase();
+    }
+    if (!clientName) return 'CL';
+    const words = clientName.trim().split(/\s+/);
+    if (words.length >= 2) {
+      return (words[0][0] + words[1][0]).toUpperCase();
+    }
+    return clientName.substring(0, 2).toUpperCase();
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -126,7 +138,7 @@ export default function ClientsCMSPage() {
           <table className="w-full text-left text-xs text-on-surface">
             <thead className="bg-surface-container text-on-surface-variant font-bold border-b border-glass-border uppercase tracking-wider">
               <tr>
-                <th className="p-4">Client Name & Logo</th>
+                <th className="p-4">Client Name & Brand</th>
                 <th className="p-4">Sector</th>
                 <th className="p-4">Location</th>
                 <th className="p-4">Placements</th>
@@ -137,23 +149,34 @@ export default function ClientsCMSPage() {
               {clients.map((c) => (
                 <tr key={c.id} className="hover:bg-surface-container/50 transition-colors">
                   <td className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 border border-glass-border flex items-center justify-center font-black text-primary text-xs tracking-wider">
-                        {c.logoText || c.name?.substring(0, 3)?.toUpperCase() || ''}
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-10 h-10 min-w-[40px] rounded-xl bg-primary/15 border border-primary/20 flex items-center justify-center font-extrabold text-primary text-xs shrink-0 shadow-sm uppercase tracking-wide">
+                        {getClientInitials(c.name, c.logoText)}
                       </div>
-                      <div>
-                        <div className="font-bold text-sm text-on-surface">{c.name}</div>
-                        <div className="text-[10px] text-on-surface-variant truncate max-w-[200px]">{c.focus}</div>
+                      <div className="flex flex-col min-w-0">
+                        <div className="font-bold text-sm text-on-surface truncate">{c.name}</div>
+                        <div className="flex items-center gap-2 text-[11px] text-on-surface-variant truncate mt-0.5">
+                          {c.logoText && (
+                            <span className="px-1.5 py-0.5 rounded bg-surface-container-high border border-glass-border text-[9px] font-black text-primary tracking-wider uppercase shrink-0">
+                              {c.logoText}
+                            </span>
+                          )}
+                          {c.focus && <span className="truncate max-w-[240px] opacity-75">{c.focus}</span>}
+                        </div>
                       </div>
                     </div>
                   </td>
                   <td className="p-4">
-                    <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary font-semibold text-[10px] border border-glass-border">
+                    <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-bold text-[10px] border border-glass-border whitespace-nowrap">
                       {c.sector}
                     </span>
                   </td>
-                  <td className="p-4 text-on-surface-variant font-medium">{c.location}</td>
-                  <td className="p-4 font-bold text-secondary">{c.placements || '—'}</td>
+                  <td className="p-4 text-on-surface-variant font-medium text-xs">{c.location}</td>
+                  <td className="p-4">
+                    <span className="px-2.5 py-1 rounded-lg bg-surface-container text-secondary font-bold text-xs border border-glass-border whitespace-nowrap">
+                      {c.placements || '—'}
+                    </span>
+                  </td>
                   <td className="p-4 text-right">
                     <div className="flex items-center justify-end gap-2">
                       <button 
